@@ -1,8 +1,8 @@
 <?php
 /*
- * Plugin Name:     WP Tables Of Content
+ * Plugin Name:     WP Table of Content
  * Plugin URI:      https://github.com/sumanengbd/wptoc
- * Description:     WP Table of Contents is a simple and easy-to-use WordPress plugin that automatically generates a list of contents for your web page, making it easy for your users to navigate and find the information they need.
+ * Description:     WP Table of Content is a user-friendly WordPress plugin that generates a table of contents for your web pages, making it easier for your readers to navigate and find the information they need.
  * Version:         1.0
  * Author:          Suman Ali
  * Author URI:      https://github.com/sumanengbd
@@ -767,7 +767,7 @@ if ( ! class_exists( 'WPTOC' ) ) {
             // Generate the table of contents
             $wptoc_title_padding = get_option( 'wptoc_title_padding' );
             $wptoc_content_padding = get_option( 'wptoc_content_padding' );
-            
+
             $wptoc = '<div class="wp-block-group">';
                 $wptoc .= '<div class="wptoc'.( get_option( 'toc_openhide', 1 ) ? ' wptoc__unfolded' : '' ).'" style="'.$style.'" data-minus="'.($wptoc_title_padding['bottom']+$wptoc_content_padding['top']+$wptoc_content_padding['bottom']).'">';
                     $wptoc .= '<div class="wptoc__header" data-show="'.( get_option( 'wptoc_openhide', 1 ) ? 'true' : 'false' ).'" style="margin-bottom: -'.( !get_option( 'wptoc_openhide', 1 ) ? $wptoc_title_padding['bottom']+$wptoc_content_padding['top']+$wptoc_content_padding['bottom'].'px' : '0px' ).'">';
