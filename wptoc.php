@@ -40,6 +40,7 @@ if ( ! class_exists( 'WPTOC' ) ) {
 
             // Redirect
             add_action( 'activated_plugin', array($this, 'wptoc_activation_redirect') );
+            add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array($this, 'wptoc_add_settings_link' ) );
         }
 
         /**
@@ -49,6 +50,15 @@ if ( ! class_exists( 'WPTOC' ) ) {
             if( $plugin == plugin_basename( __FILE__ ) ) {
                 exit( wp_redirect( admin_url( 'options-general.php?page=wptoc-settings' ) ) );
             }
+        }
+
+        /**
+         * Add Settings Link.
+         */
+        function wptoc_add_settings_link( $links ) {
+            $settings_link = '<a href="'.admin_url( 'options-general.php?page=wptoc-settings' ).'">'.esc_html__( 'Settings', 'wptoc').'</a>';
+            array_unshift( $links, $settings_link );
+            return $links;
         }
 
         /**
@@ -111,24 +121,70 @@ if ( ! class_exists( 'WPTOC' ) ) {
 
                 <div class="wptoc-content">
                     <h1 class="wptoc-hidden"></h1>
-                    <form action="options.php" id="wptoc-form" method="POST">
-                        <?php 
-                            settings_fields( 'tableofcontent' ); 
-                        ?>
-                        <div id="basic-settings" class="wptoc-tab__content">
-                            <?php
-                                do_settings_sections( 'wptoc-settings' );
-                            ?>
+
+                    <div class="wptoc-row">
+                        <div class="wptoc-column wptoc-main">  
+                            <form action="options.php" id="wptoc-form" method="POST">
+                                <?php 
+                                    settings_fields( 'tableofcontent' ); 
+                                ?>
+                                <div id="basic-settings" class="wptoc-tab__content">
+                                    <?php
+                                        do_settings_sections( 'wptoc-settings' );
+                                    ?>
+                                </div>
+
+                                <div id="layout-settings" class="wptoc-tab__content">
+                                    <?php 
+                                        do_settings_sections( 'wptoc-settings-layout' );
+                                    ?>
+                                </div>
+
+                                <?php submit_button(); ?>
+                            </form>
                         </div>
 
-                        <div id="layout-settings" class="wptoc-tab__content">
-                            <?php 
-                                do_settings_sections( 'wptoc-settings-layout' );
-                            ?>
-                        </div>
+                        <div class="wptoc-column wptoc-sidebar">
 
-                        <?php submit_button(); ?>
-                    </form>
+                            <div class="content-sidebar">
+                                <h2>More Plugin Lists</h2>
+
+                                <div class="wptoc-plugins">
+                                    <a href="https://wordpress.org/plugins/acf-clone-repeater/" class="wptoc-plugins__item" target="_blank" style="color: #00E4BC">
+                                        <div class="wptoc-plugins__item-media">
+                                            <img src="https://i.imgur.com/OuBvXnV.png" alt="">
+                                        </div>
+
+                                        <div class="wptoc-plugins__item-text">
+                                            <h3 class="title">ACF Clone Repeater</h3>
+
+                                            <div class="description">
+                                                <p>ACF Clone Repeater is a WordPress plugin that lets users duplicate custom fields and groups within Advanced Custom Fields, simplifying the process of creating similar content.</p>
+                                            </div>
+
+                                            <button class="button button-primary">Download Now</button>
+                                        </div>
+                                    </a>
+
+                                    <a href="https://github.com/sumanengbd/active-login-users/" target="_blank" class="wptoc-plugins__item" style="color: #FBCAF6">
+                                        <div class="wptoc-plugins__item-media">
+                                            <img src="https://i.imgur.com/u15E8QM.png" alt="">
+                                        </div>
+
+                                        <div class="wptoc-plugins__item-text">
+                                            <h3 class="title">Active Login Users</h3>
+
+                                            <div class="description">
+                                                <p>The Active Login Users plugin is an outstanding resource that allows you to display all users and currently logged-in users on your posts, pages, and other locations.</p>
+                                            </div>
+
+                                            <button class="button button-primary">Download Now</button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div> 
             <?php
@@ -827,7 +883,7 @@ if ( ! class_exists( 'WPTOC' ) ) {
             $posh6 = strpos($content, '<h6');
 
             // Determine location of table of contents and return content with table of contents added
-            switch (get_option('toc_location', '0')) {
+            switch (get_option('wptoc_location', '0')) {
                 case '0':
                     return $wptoc . $content;
                 case '1':
