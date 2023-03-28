@@ -150,37 +150,44 @@ if ( ! class_exists( 'WPTOC' ) ) {
                                 <h2>More Plugin Lists</h2>
 
                                 <div class="wptoc-plugins">
-                                    <a href="https://wordpress.org/plugins/acf-clone-repeater/" class="wptoc-plugins__item" target="_blank" style="color: #00E4BC">
-                                        <div class="wptoc-plugins__item-media">
-                                            <img src="https://i.imgur.com/OuBvXnV.png" alt="">
-                                        </div>
+                                    <?php
+                                        $plugins = array(
+                                            array(
+                                                'name' => 'ACF Clone Repeater',
+                                                'description' => 'ACF Clone Repeater is a WordPress plugin that lets users duplicate custom fields and groups within Advanced Custom Fields, simplifying the process of creating similar content.',
+                                                'image_url' => 'https://i.imgur.com/OuBvXnV.png',
+                                                'link' => 'https://wordpress.org/plugins/acf-clone-repeater/',
+                                                'color' => '#00E4BC'
+                                            ),
+                                            array(
+                                                'name' => 'Active Login Users',
+                                                'description' => 'The Active Login Users plugin is an outstanding resource that allows you to display all users and currently logged-in users on your posts, pages, and other locations.',
+                                                'image_url' => 'https://i.imgur.com/u15E8QM.png',
+                                                'link' => 'https://github.com/sumanengbd/active-login-users/',
+                                                'color' => '#FBCAF6'
+                                            )
+                                        );
 
-                                        <div class="wptoc-plugins__item-text">
-                                            <h3 class="title">ACF Clone Repeater</h3>
+                                        foreach ($plugins as $plugin) {
+                                            ?>
+                                                <a href="<?php echo $plugin['link']; ?>" class="wptoc-plugins__item" target="_blank" style="color: <?php echo $plugin['color']; ?>">
+                                                    <div class="wptoc-plugins__item-media">
+                                                        <img src="<?php echo $plugin['image_url']; ?>" alt="">
+                                                    </div>
 
-                                            <div class="description">
-                                                <p>ACF Clone Repeater is a WordPress plugin that lets users duplicate custom fields and groups within Advanced Custom Fields, simplifying the process of creating similar content.</p>
-                                            </div>
+                                                    <div class="wptoc-plugins__item-text">
+                                                        <h3 class="title"><?php echo $plugin['name']; ?></h3>
 
-                                            <button class="button button-primary">Download Now</button>
-                                        </div>
-                                    </a>
+                                                        <div class="description">
+                                                            <p><?php echo $plugin['description']; ?></p>
+                                                        </div>
 
-                                    <a href="https://github.com/sumanengbd/active-login-users/" target="_blank" class="wptoc-plugins__item" style="color: #FBCAF6">
-                                        <div class="wptoc-plugins__item-media">
-                                            <img src="https://i.imgur.com/u15E8QM.png" alt="">
-                                        </div>
-
-                                        <div class="wptoc-plugins__item-text">
-                                            <h3 class="title">Active Login Users</h3>
-
-                                            <div class="description">
-                                                <p>The Active Login Users plugin is an outstanding resource that allows you to display all users and currently logged-in users on your posts, pages, and other locations.</p>
-                                            </div>
-
-                                            <button class="button button-primary">Download Now</button>
-                                        </div>
-                                    </a>
+                                                        <button class="button button-primary">Download Now</button>
+                                                    </div>
+                                                </a>
+                                            <?php
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -500,39 +507,43 @@ if ( ! class_exists( 'WPTOC' ) ) {
             return $input;
         }
 
-        /** 
+        /**
          * Display Location HTML Select
-         * 
          */
         public function wptoc_location_html() {
-            ?>
-                <div class="wptoc-select">
-                    <select name="wptoc_location">
-                        <option value="0" <?php selected( get_option( 'wptoc_location' ), 0 ); ?>><?php echo esc_html__( 'Beginning of Post', 'wptoc'); ?></option>
-                        <option value="1" <?php selected( get_option( 'wptoc_location' ), 1 ); ?>><?php echo esc_html__( 'End of Post', 'wptoc'); ?></option>
-                        <option value="2" <?php selected( get_option( 'wptoc_location' ), 2 ); ?>><?php echo esc_html__( 'After First Paragraph', 'wptoc'); ?></option>
-                        <option value="3" <?php selected( get_option( 'wptoc_location' ), 3 ); ?>><?php echo esc_html__( 'Before First H2 Tag', 'wptoc'); ?></option>
-                        <option value="4" <?php selected( get_option( 'wptoc_location' ), 4 ); ?>><?php echo esc_html__( 'Before First H3 Tag', 'wptoc'); ?></option>
-                        <option value="5" <?php selected( get_option( 'wptoc_location' ), 5 ); ?>><?php echo esc_html__( 'Before First H4 Tag', 'wptoc'); ?></option>
-                        <option value="6" <?php selected( get_option( 'wptoc_location' ), 6 ); ?>><?php echo esc_html__( 'Before First H5 Tag', 'wptoc'); ?></option>
-                        <option value="7" <?php selected( get_option( 'wptoc_location' ), 7 ); ?>><?php echo esc_html__( 'Before First H6 Tag', 'wptoc'); ?></option>
-                    </select>    
-                </div>
-            <?php
+        ?>
+        <div class="wptoc-select">
+            <select name="wptoc_location">
+                <?php
+                    $options = array(
+                      0 => 'Beginning of Post',
+                      1 => 'End of Post',
+                      2 => 'After First Paragraph',
+                      3 => 'Before First H2 Tag',
+                      4 => 'Before First H3 Tag',
+                      5 => 'Before First H4 Tag',
+                      6 => 'Before First H5 Tag',
+                      7 => 'Before First H6 Tag'
+                    );
+
+                    foreach ( $options as $value => $label ) {
+                        printf( '<option value="%s" %s>%s</option>', $value, selected( get_option( 'wptoc_location' ), $value, false ), esc_html__( $label, 'wptoc' ) );
+                    }
+                ?>
+            </select>
+        </div>
+        <?php
         }
 
-        /** 
+        /**
          * Sanitize Display Location HTML Select
-         * 
          */
         public function wptoc_sanitize_location( $input ) {
-
-            if ( $input != '0' && $input != '1' && $input != '2' && $input != '3' && $input != '4' && $input != '5' && $input != '6' && $input != '7' ) {
-                add_settings_error('wptoc_location', 'wptoc_location_error', esc_html__( 'Display location must be either beginning, end or after the first paragraph and before first h2-h6 tag.', 'wptoc' ) );
-
+            $options = array( '0', '1', '2', '3', '4', '5', '6', '7' );
+            if ( !in_array( $input, $options ) ) {
+                add_settings_error( 'wptoc_location', 'wptoc_location_error', esc_html__( 'Display location must be either beginning, end or after the first paragraph and before first h2-h6 tag.', 'wptoc' ) );
                 return get_option( 'wptoc_location' );
             }
-
             return $input;
         }
 
@@ -554,17 +565,13 @@ if ( ! class_exists( 'WPTOC' ) ) {
          */
         public function wptoc_headline_tag_html() {
             ?>
-                <div class="wptoc-select">
-                    <select name="wptoc_headline_tag">
-                        <option value="span" <?php selected( get_option( 'wptoc_headline_tag' ), 'span' ); ?>>No Tag</option>
-                        <option value="h1" <?php selected( get_option( 'wptoc_headline_tag' ), 'h1' ); ?>>H1</option>
-                        <option value="h2" <?php selected( get_option( 'wptoc_headline_tag' ), 'h2' ); ?>>H2</option>
-                        <option value="h3" <?php selected( get_option( 'wptoc_headline_tag' ), 'h3' ); ?>>H3</option>
-                        <option value="h4" <?php selected( get_option( 'wptoc_headline_tag' ), 'h4' ); ?>>H4</option>
-                        <option value="h5" <?php selected( get_option( 'wptoc_headline_tag' ), 'h5' ); ?>>H5</option>
-                        <option value="h6" <?php selected( get_option( 'wptoc_headline_tag' ), 'h6' ); ?>>H6</option>
-                    </select>    
-                </div>
+            <div class="wptoc-select">
+                <select name="wptoc_headline_tag">
+                    <?php foreach (['span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as $tag) { ?>
+                        <option value="<?php echo $tag; ?>" <?php selected(get_option('wptoc_headline_tag'), $tag); ?>><?php echo strtoupper($tag); ?></option>
+                    <?php } ?>
+                </select>    
+            </div>
             <?php
         }
 
@@ -572,16 +579,15 @@ if ( ! class_exists( 'WPTOC' ) ) {
          * Sanitize Headline Tag Field
          * 
          */
-        public function wptoc_sanitize_headline_tag( $input ) {
-
-            if ( $input != 'span' && $input != 'h1' && $input != 'h2' && $input != 'h3' && $input != 'h4' && $input != 'h5' && $input != 'h6' ) {
-                add_settings_error('wptoc_headline_tag', 'wptoc_headline_tag_error', esc_html__( 'The lists should contain the heading tag.', 'wptoc' ) );
-
-                return get_option( 'wptoc_headline_tag' );
+        public function wptoc_sanitize_headline_tag($input) {
+            $valid_tags = ['span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+            if (!in_array($input, $valid_tags)) {
+                add_settings_error('wptoc_headline_tag', 'wptoc_headline_tag_error', esc_html__('The lists should contain the heading tag.', 'wptoc'));
+                return get_option('wptoc_headline_tag');
             }
-
             return $input;
         }
+
 
         /** 
          * Dynamic Checkbox Function for all Checkbox Field
@@ -636,13 +642,15 @@ if ( ! class_exists( 'WPTOC' ) ) {
          * Padding HTML Field
          */
         public function wptoc_pmbr_html( $args ) {
+            $fieldID = !empty( $args['fieldID'] ) && array_key_exists( 'fieldID', $args ) ? 'id="'.$args['fieldID'].'"' : '';
+            $fieldLabel = isset( $args['fieldLabel'] ) && !empty( $args['fieldLabel'] ) ? $args['fieldLabel'] : 'PX';
+            $value = esc_html__( get_option( $args['fieldName'] ), 'wptoc' );
             ?>
             <div class="top-group-input max-width">
                 <div class="wptoc-input">
-                    <input type="text" name="<?php echo $args['fieldName']; ?>" <?php echo !empty( $args['fieldID'] ) && array_key_exists( 'fieldID', $args ) ? 'id="'.$args['fieldID'].'"' : ''; ?> value="<?php echo esc_html__( get_option( $args['fieldName'] ), 'wptoc' ); ?>">
-                    <label <?php echo !empty( $args['fieldID'] ) && array_key_exists( 'fieldID', $args ) ? 'for="'.$args['fieldID'].'"' : ''; ?> class="right"><?php echo isset( $args['fieldLabel'] ) && !empty( $args['fieldLabel'] ) ? $args['fieldLabel'] : 'PX'; ?></label>
+                    <input type="text" name="<?php echo $args['fieldName']; ?>" <?php echo $fieldID; ?> value="<?php echo $value; ?>">
+                    <label <?php echo $fieldID; ?> class="right"><?php echo $fieldLabel; ?></label>
                 </div>
-
                 <p></p>
             </div>
             <?php
@@ -654,44 +662,24 @@ if ( ! class_exists( 'WPTOC' ) ) {
         public function wptoc_margin_padding_border_radius_html( $args ) {
             $value = get_option( $args['fieldName'] );
             ?>
-                <div class="top-group-input grid-four-column max-width">
+            <div class="top-group-input grid-four-column max-width">
+                <?php foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) : ?>
                     <div class="wptoc-input">
-                        <input type="number" name="<?php echo $args['fieldName']; ?>[top]" id="<?php echo $args['fieldName']; ?>[top]" value="<?php echo esc_attr( $value['top'] ); ?>">
-                        <label for="<?php echo $args['fieldName']; ?>[top]" class="top"><?php echo $args['fieldLabel']['top']; ?></label>
-                        <label for="<?php echo $args['fieldName']; ?>[top]" class="right">PX</label>
+                        <input type="number" name="<?php echo $args['fieldName'] . '[' . $side . ']'; ?>" id="<?php echo $args['fieldName'] . '[' . $side . ']'; ?>" value="<?php echo esc_attr( $value[$side] ); ?>">
+                        <label for="<?php echo $args['fieldName'] . '[' . $side . ']'; ?>" class="top"><?php echo $args['fieldLabel'][$side]; ?></label>
+                        <label for="<?php echo $args['fieldName'] . '[' . $side . ']'; ?>" class="right">PX</label>
                     </div>
-                    <div class="wptoc-input">
-                        <input type="number" name="<?php echo $args['fieldName']; ?>[right]" id="<?php echo $args['fieldName']; ?>[right]" value="<?php echo esc_attr( $value['right'] ); ?>">
-                        <label for="<?php echo $args['fieldName']; ?>[right]" class="top"><?php echo $args['fieldLabel']['right']; ?></label>
-                        <label for="<?php echo $args['fieldName']; ?>[right]" class="right">PX</label>
-                    </div>
-                    <div class="wptoc-input">
-                        <input type="number" name="<?php echo $args['fieldName']; ?>[bottom]" id="<?php echo $args['fieldName']; ?>[bottom]" value="<?php echo esc_attr( $value['bottom'] ); ?>">
-                        <label for="<?php echo $args['fieldName']; ?>[bottom]" class="top"><?php echo $args['fieldLabel']['bottom']; ?></label>
-                        <label for="" class="right">PX</label>
-                    </div>
-                    <div class="wptoc-input">
-                        <input type="number" name="<?php echo $args['fieldName']; ?>[left]" id="<?php echo $args['fieldName']; ?>[left]" value="<?php echo esc_attr( $value['left'] ); ?>">
-                        <label for="<?php echo $args['fieldName']; ?>[left]" class="top"><?php echo $args['fieldLabel']['left']; ?></label>
-                        <label for="<?php echo $args['fieldName']; ?>[left]" class="right">PX</label>
-                    </div>
-                </div>
+                <?php endforeach; ?>
+            </div>
             <?php
         }
 
         function wptoc_sanitize_margin_padding_border_radius( $input ) {
             $output = array();
-            if ( isset( $input['top'] ) ) {
-                $output['top'] = absint( $input['top'] );
-            }
-            if ( isset( $input['right'] ) ) {
-                $output['right'] = absint( $input['right'] );
-            }
-            if ( isset( $input['bottom'] ) ) {
-                $output['bottom'] = absint( $input['bottom'] );
-            }
-            if ( isset( $input['left'] ) ) {
-                $output['left'] = absint( $input['left'] );
+            foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
+                if ( isset( $input[$side] ) ) {
+                    $output[$side] = absint( $input[$side] );
+                }
             }
             return $output;
         }
@@ -766,15 +754,26 @@ if ( ! class_exists( 'WPTOC' ) ) {
 
             // Loop through each heading and add an ID to it
             foreach ($matches[0] as $key => $heading) {
-                $id = 'heading-' . ($key + 1);
+
                 $level = $matches[1][$key];
                 $title = $matches[3][$key];
+
+                // Check if the title already exists in the array
+                $count = array_count_values(array_column($headings, 'title'))[$title] ?? 0;
+                
+                if ($count > 0) {
+                    $id = sanitize_title( $title ) . '-' . ($count + 1);
+                } else {
+                    $id = sanitize_title( $title );
+                }
+
                 $headings[] = array(
-                    'title' => $title,
                     'id' => $id,
+                    'title' => $title,
                     'level' => $level
                 );
-                $content = str_replace($heading, '<h' . $level . ' id="' . $id . '">' . $title . '</h' . $level . '>', $content);
+
+                $content = preg_replace('/'.preg_quote($heading, '/').'/', '<h' . $level . ' id="' . $id . '">' . $title . '</h' . $level . '>', $content, 1);
             }
 
             $styles_and_properties = array(
@@ -825,93 +824,58 @@ if ( ! class_exists( 'WPTOC' ) ) {
             $wptoc_content_padding = get_option( 'wptoc_content_padding' );
 
             $wptoc = '<div class="wp-block-group">';
-                $wptoc .= '<div class="wptoc'.( get_option( 'toc_openhide', 1 ) ? ' wptoc__unfolded' : '' ).'" style="'.$style.'" data-minus="'.($wptoc_title_padding['bottom']+$wptoc_content_padding['top']+$wptoc_content_padding['bottom']).'">';
-                    $wptoc .= '<div class="wptoc__header" data-show="'.( get_option( 'wptoc_openhide', 1 ) ? 'true' : 'false' ).'" style="margin-bottom: -'.( !get_option( 'wptoc_openhide', 1 ) ? $wptoc_title_padding['bottom']+$wptoc_content_padding['top']+$wptoc_content_padding['bottom'].'px' : '0px' ).'">';
+            $wptoc .= '<div class="wptoc'.( get_option( 'toc_openhide', 1 ) ? ' wptoc__unfolded' : '' ).'" style="'.$style.'" data-minus="'.($wptoc_title_padding['bottom']+$wptoc_content_padding['top']+$wptoc_content_padding['bottom']).'">';
+            $wptoc .= '<div class="wptoc__header" data-show="'.( get_option( 'wptoc_openhide', 1 ) ? 'true' : 'false' ).'" style="margin-bottom: -'.( !get_option( 'wptoc_openhide', 1 ) ? $wptoc_title_padding['bottom']+$wptoc_content_padding['top']+$wptoc_content_padding['bottom'].'px' : '0px' ).'">';
 
-                        if ( get_option( 'wptoc_headline' ) ) {
-                            $wptoc .= '<'.get_option( 'wptoc_headline_tag', 'span' ).' class="wptoc__title">' . esc_html( get_option( 'wptoc_headline', 'Table of Contents' ), 'wptoc' ) . '</'.get_option( 'wptoc_headline_tag', 'span' ).'>';
-                        }
+            if ( get_option( 'wptoc_headline' ) ) {
+                $wptoc .= '<'.get_option( 'wptoc_headline_tag', 'span' ).' class="wptoc__title">' . esc_html( get_option( 'wptoc_headline', 'Table of Contents' ), 'wptoc' ) . '</'.get_option( 'wptoc_headline_tag', 'span' ).'>';
+            }
 
-                        $wptoc .= '<span class="wptoc__toggler'.( get_option( 'wptoc_openhide', 1 ) ? ' wptoc__toggler--active' : '' ).'"><span class="qicon"></span></span>';
-                    $wptoc .= '</div>';
-
-                    $wptoc .= '<div class="wptoc__content'.( get_option( 'wptoc_openhide', 1 ) ? ' wptoc__content--show' : ' wptoc__content--hide' ).'">';
-                        $last_level = 0;
-
-                        if ( count($headings) > 0 ) 
-                        {
-                            foreach ($headings as $heading) 
-                            {
-                                $current_level = $heading['level'];
-                                $title = $heading['title'];
-                                $id = $heading['id'];
-
-                                if ($current_level > $last_level) 
-                                {
-                                    $wptoc .= '<ol class="wptoc__lists wptoc__label-'. $current_level .'">';
-                                } 
-                                elseif ($current_level < $last_level) 
-                                {
-                                    $wptoc .= str_repeat('</li></ol>', $last_level - $current_level) . '</li>';
-                                } 
-                                else 
-                                {
-                                    $wptoc .= '</li>';
-                                }
-
-                                $wptoc .= '<li><a href="#' . $id . '">' . $title . '</a>';
-                                $last_level = $current_level;
-                            }
-                        }
-                        else
-                        {
-                            $wptoc .= esc_html( "This page doesn't contain any headings.", 'wptoc' );
-                        }
-
-                        $wptoc .= str_repeat('</li></ul>', $last_level);
-                    $wptoc .= '</div>';
-                $wptoc .= '</div>';
+            $wptoc .= '<span class="wptoc__toggler'.( get_option( 'wptoc_openhide', 1 ) ? ' wptoc__toggler--active' : '' ).'"><span class="qicon"></span></span>';
             $wptoc .= '</div>';
+            $wptoc .= '<div class="wptoc__content'.( get_option( 'wptoc_openhide', 1 ) ? ' wptoc__content--show' : ' wptoc__content--hide' ).'">';
 
-            // Add the table of contents to the content
+            $last_level = 0;
+
+            if ( count($headings) > 0 ) {
+                foreach ($headings as $heading) {
+                    $current_level = $heading['level'];
+                    $title = $heading['title'];
+                    $id = $heading['id'];
+
+                    if ($current_level > $last_level) {
+                        $wptoc .= '<ol class="wptoc__lists wptoc__label-'. $current_level .'">';
+                    } elseif ($current_level < $last_level) {
+                        $wptoc .= str_repeat('</li></ol>', $last_level - $current_level) . '</li>';
+                    } else {
+                        $wptoc .= '</li>';
+                    }
+
+                    $wptoc .= '<li><a href="#' . $id . '">' . $title . '</a>';
+                    $last_level = $current_level;
+                }
+            } else {
+                $wptoc .= esc_html( "This page doesn't contain any headings.", 'wptoc' );
+            }
+
+            $wptoc .= str_repeat('</li></ul>', $last_level);
+            $wptoc .= '</div></div></div>';
+
             // Find positions of headings and paragraph tags
-            $pos = strpos($content, '</p');
-            $posh2 = strpos($content, '<h2');
-            $posh3 = strpos($content, '<h3');
-            $posh4 = strpos($content, '<h4');
-            $posh5 = strpos($content, '<h5');
-            $posh6 = strpos($content, '<h6');
+            $headings = ['</p', '<h2', '<h3', '<h4', '<h5', '<h6'];
+            $positions = array_map(function($h) use ($content) { return strpos($content, $h); }, $headings);
+            $loc = get_option('wptoc_location', '0');
 
-            // Determine location of table of contents and return content with table of contents added
-            switch (get_option('wptoc_location', '0')) {
-                case '0':
-                    return $wptoc . $content;
-                case '1':
-                    return $content . $wptoc;
-                case '2':
-                    if ($pos !== false) {
+            if ($loc === '0') {
+                return $wptoc . $content;
+            } elseif ($loc === '1') {
+                return $content . $wptoc;
+            } else {
+                foreach ($positions as $index => $pos) {
+                    if ($pos !== false && $loc === strval($index + 2)) {
                         return substr_replace($content, $wptoc, $pos, 0);
                     }
-                case '3':
-                    if ($posh2 !== false) {
-                        return substr_replace($content, $wptoc, $posh2, 0);
-                    }
-                case '4':
-                    if ($posh3 !== false) {
-                        return substr_replace($content, $wptoc, $posh3, 0);
-                    }
-                case '5':
-                    if ($posh4 !== false) {
-                        return substr_replace($content, $wptoc, $posh4, 0);
-                    }
-                case '6':
-                    if ($posh5 !== false) {
-                        return substr_replace($content, $wptoc, $posh5, 0);
-                    }
-                case '7':
-                    if ($posh6 !== false) {
-                        return substr_replace($content, $wptoc, $posh6, 0);
-                    }
+                }
             }
 
             return $content;
@@ -920,4 +884,3 @@ if ( ! class_exists( 'WPTOC' ) ) {
 
     $wptoc = new WPTOC();
 }
-
