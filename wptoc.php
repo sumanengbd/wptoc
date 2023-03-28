@@ -155,14 +155,14 @@ if ( ! class_exists( 'WPTOC' ) ) {
                                             array(
                                                 'name' => 'ACF Clone Repeater',
                                                 'description' => 'ACF Clone Repeater is a WordPress plugin that lets users duplicate custom fields and groups within Advanced Custom Fields, simplifying the process of creating similar content.',
-                                                'image_url' => 'https://i.imgur.com/OuBvXnV.png',
+                                                'image_url' => plugins_url( 'assets/admin/images/', __FILE__ ).'icon-acf-clone-repeater.png',
                                                 'link' => 'https://wordpress.org/plugins/acf-clone-repeater/',
                                                 'color' => '#00E4BC'
                                             ),
                                             array(
                                                 'name' => 'Active Login Users',
                                                 'description' => 'The Active Login Users plugin is an outstanding resource that allows you to display all users and currently logged-in users on your posts, pages, and other locations.',
-                                                'image_url' => 'https://i.imgur.com/u15E8QM.png',
+                                                'image_url' => plugins_url( 'assets/admin/images/', __FILE__ ).'icon-active-login-users.png',
                                                 'link' => 'https://github.com/sumanengbd/active-login-users/',
                                                 'color' => '#FBCAF6'
                                             )
